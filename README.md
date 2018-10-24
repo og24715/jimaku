@@ -4,16 +4,24 @@
 - `ffmpeg` で字幕を焼く
 - `youtube-dl` で得た字幕データをもとに任意のフレームの画像を生成
 
-## youtube-dl（brew install youtube-dl）
+## youtube-dl
+
+### インストール方法
+
+```shell
+$ brew install youtube-dl
+```
 
 - YouTubeの動画をローカルにダウンロードする
 - 字幕ファイル（”ass”形式）をダウンロードする
-
 - 成果物：x.mp4 x.ja.ass
+
+### 使い方
 
 ```shell
 $ youtube-dl --write-auto-sub --sub-lang ja --convert-subs ass -f "mp4" -o x.mp4 URL
 ```
+
 |オプション|目的|
 |:--|:-|
 |--write-auto-sub|字幕ファイルを自動生成|
@@ -22,11 +30,18 @@ $ youtube-dl --write-auto-sub --sub-lang ja --convert-subs ass -f "mp4" -o x.mp4
 |-f "mp4"|動画ファイルを"mp4"形式に指定|
 |-o x.mp4|出力後の動画ファイル名を指定|
 
-## ffmpeg（brew reinstall ffmpeg --with-libass）
+## ffmpeg
+
+### インストール方法
+
+```shell
+brew reinstall ffmpeg --with-libass
+```
 
 - ローカルの動画（"mp4"形式）に字幕（"ass"形式）を焼く
-
 - 成果物：x2.mp4
+
+### 使い方
 
 ```shell
 $ ffmpeg -i x.mp4 -vf ass=x.ja.ass x2.mp4
