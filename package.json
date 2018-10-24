@@ -1,0 +1,11 @@
+{
+  "name": "jimaku",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/og24715/jimaku.git",
+  "author": "hirakawa <og@hotmail.co.jp>",
+  "license": "MIT",
+  "scripts": {
+    "youtube-dl-with-subtitle": "youtube-dl --write-sub --sub-lang ja --convert-subs ass --output video",
+  }
+}
