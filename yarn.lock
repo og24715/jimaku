@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+addressparser@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/addressparser/-/addressparser-1.0.1.tgz#47afbe1a2a9262191db6838e4fd1d39b40821746"
+
 ass-parser@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/ass-parser/-/ass-parser-0.2.0.tgz#81e7e0425500a01fb2d218ac4a19a0ec4fad1ebf"
@@ -10,6 +14,48 @@ ass-parser@^0.2.0:
     fzip "^0.2.0"
     regexp.execall "^1.0.2"
     zipmap "^1.1.1"
+
+dom-serializer@0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-0.1.0.tgz#073c697546ce0780ce23be4a28e293e40bc30c82"
+  dependencies:
+    domelementtype "~1.1.1"
+    entities "~1.1.1"
+
+domelementtype@1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-1.2.1.tgz#578558ef23befac043a1abb0db07635509393479"
+
+domelementtype@^1.3.0:
+  version "1.3.0"
+  resolved "http://registry.npmjs.org/domelementtype/-/domelementtype-1.3.0.tgz#b17aed82e8ab59e52dd9c19b1756e0fc187204c2"
+
+domelementtype@~1.1.1:
+  version "1.1.3"
+  resolved "http://registry.npmjs.org/domelementtype/-/domelementtype-1.1.3.tgz#bd28773e2642881aec51544924299c5cd822185b"
+
+domhandler@^2.3.0:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-2.4.2.tgz#8805097e933d65e85546f726d60f5eb88b44f803"
+  dependencies:
+    domelementtype "1"
+
+domutils@^1.5.1:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.7.0.tgz#56ea341e834e06e6748af7a1cb25da67ea9f8c2a"
+  dependencies:
+    dom-serializer "0"
+    domelementtype "1"
+
+encoding@~0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/encoding/-/encoding-0.1.12.tgz#538b66f3ee62cd1ab51ec323829d1f9480c74beb"
+  dependencies:
+    iconv-lite "~0.4.13"
+
+entities@^1.1.1, entities@~1.1.1:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
 
 flatmap@0.0.3:
   version "0.0.3"
@@ -21,6 +67,76 @@ fzip@^0.2.0:
   dependencies:
     lodash.zip "^2.4.1"
     lodash.zipobject "^2.4.1"
+
+he@1.2.0, he@^1.0.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
+
+html-to-text@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/html-to-text/-/html-to-text-4.0.0.tgz#c1f4e100d74e9feab5b152d7b6b3be3c1c6412b0"
+  dependencies:
+    he "^1.0.0"
+    htmlparser2 "^3.9.2"
+    lodash "^4.17.4"
+    optimist "^0.6.1"
+
+htmlparser2@^3.9.2:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.10.0.tgz#5f5e422dcf6119c0d983ed36260ce9ded0bee464"
+  dependencies:
+    domelementtype "^1.3.0"
+    domhandler "^2.3.0"
+    domutils "^1.5.1"
+    entities "^1.1.1"
+    inherits "^2.0.1"
+    readable-stream "^3.0.6"
+
+iconv-lite@0.4.23:
+  version "0.4.23"
+  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.23.tgz#297871f63be507adcfbfca715d0cd0eed84e9a63"
+  dependencies:
+    safer-buffer ">= 2.1.2 < 3"
+
+iconv-lite@0.4.24, iconv-lite@~0.4.13:
+  version "0.4.24"
+  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
+  dependencies:
+    safer-buffer ">= 2.1.2 < 3"
+
+inbox@^1.1.59:
+  version "1.1.59"
+  resolved "https://registry.yarnpkg.com/inbox/-/inbox-1.1.59.tgz#934f520dedd88412770c22294b629de4d6166d07"
+  dependencies:
+    mimelib "*"
+    utf7 "~1.0.0"
+    xoauth2 "*"
+
+inherits@^2.0.1, inherits@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
+
+libbase64@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/libbase64/-/libbase64-1.0.3.tgz#de3023234abeefeb9d49378804c8a94404f5c98c"
+
+libmime@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/libmime/-/libmime-4.0.1.tgz#dc71a19bfa6a97f8249d7205251d862d6fc599fb"
+  dependencies:
+    iconv-lite "0.4.23"
+    libbase64 "1.0.3"
+    libqp "1.1.0"
+
+libqp@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/libqp/-/libqp-1.1.0.tgz#f5e6e06ad74b794fb5b5b66988bf728ef1dedbe8"
+
+linkify-it@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-2.0.3.tgz#d94a4648f9b1c179d64fa97291268bdb6ce9434f"
+  dependencies:
+    uc.micro "^1.0.1"
 
 lodash._arraypool@~2.4.1:
   version "2.4.1"
@@ -248,9 +364,108 @@ lodash.zipobject@^2.4.1:
   dependencies:
     lodash.isarray "~2.4.1"
 
+lodash@^4.17.4:
+  version "4.17.11"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+
+mailparser@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-2.4.0.tgz#7ceb55fe4503d33af4fb0375a3489f3975414400"
+  dependencies:
+    he "1.2.0"
+    html-to-text "4.0.0"
+    iconv-lite "0.4.24"
+    libmime "4.0.1"
+    linkify-it "2.0.3"
+    mailsplit "4.2.3"
+    nodemailer "4.6.8"
+    tlds "1.203.1"
+
+mailsplit@4.2.3:
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/mailsplit/-/mailsplit-4.2.3.tgz#4c8ba5c69322a39625ef424df7c715a51c6271a7"
+  dependencies:
+    libbase64 "1.0.3"
+    libmime "4.0.1"
+    libqp "1.1.0"
+
+mimelib@*:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/mimelib/-/mimelib-0.3.1.tgz#787add2415d827acb3af6ec4bca1ea9596418853"
+  dependencies:
+    addressparser "~1.0.1"
+    encoding "~0.1.12"
+
+minimist@~0.0.1:
+  version "0.0.10"
+  resolved "http://registry.npmjs.org/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
+
+nodemailer@4.6.8:
+  version "4.6.8"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-4.6.8.tgz#f82fb407828bf2e76d92acc34b823d83e774f89c"
+
+optimist@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/optimist/-/optimist-0.6.1.tgz#da3ea74686fa21a19a111c326e90eb15a0196686"
+  dependencies:
+    minimist "~0.0.1"
+    wordwrap "~0.0.2"
+
+readable-stream@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.0.6.tgz#351302e4c68b5abd6a2ed55376a7f9a25be3057a"
+  dependencies:
+    inherits "^2.0.3"
+    string_decoder "^1.1.1"
+    util-deprecate "^1.0.1"
+
 regexp.execall@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/regexp.execall/-/regexp.execall-1.0.2.tgz#c8040949ab6f8d3900385fcaab0772f581495a52"
+
+safe-buffer@~5.1.0:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
+
+"safer-buffer@>= 2.1.2 < 3":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
+
+semver@~5.3.0:
+  version "5.3.0"
+  resolved "http://registry.npmjs.org/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
+
+string_decoder@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.1.1.tgz#9cf1611ba62685d7030ae9e4ba34149c3af03fc8"
+  dependencies:
+    safe-buffer "~5.1.0"
+
+tlds@1.203.1:
+  version "1.203.1"
+  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.203.1.tgz#4dc9b02f53de3315bc98b80665e13de3edfc1dfc"
+
+uc.micro@^1.0.1:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-1.0.5.tgz#0c65f15f815aa08b560a61ce8b4db7ffc3f45376"
+
+utf7@~1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/utf7/-/utf7-1.0.2.tgz#955f490aae653ba220b9456a0a8776c199360991"
+  dependencies:
+    semver "~5.3.0"
+
+util-deprecate@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
+
+wordwrap@~0.0.2:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.3.tgz#a3d5da6cd5c0bc0008d37234bbaf1bed63059107"
+
+xoauth2@*:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/xoauth2/-/xoauth2-1.2.0.tgz#f2eefac11472c971ea3bc46e554eb4b1232146e5"
 
 zipmap@^1.1.1:
   version "1.1.1"
