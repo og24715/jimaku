@@ -1,91 +1,102 @@
-const fs = require("fs");
-const assParser = require("./util/assParser");
-const exec = require("child_process").exec;
-//let execSync = require("child_process").execSync;
-const ProgressBar = require("progress");
-const deleteFiles = [ "download.mp4", "download.ja.ass", "burnedsubtitle.mp4" ];
+const fs = require('fs');
+const { exec } = require('child_process');
+const ProgressBar = require('progress');
+const assParser = require('./util/assParser');
 
-const url = process.argv[2];
+const downloadVideoName = 'download.mp4';
+const downloadSubtitileName = 'download.ja.ass';
+const burnedVideoName = 'burnedVideo.mp4';
+const deleteFiles = [downloadVideoName, downloadSubtitileName, burnedVideoName];
 
-const workURL = `youtube-dl --write-auto-sub --sub-lang ja --convert-subs ass -f "mp4" -o download.mp4 ${url}`;
-const workJimaku = 'ffmpeg -y -i download.mp4 -vf ass=download.ja.ass burnedsubtitle.mp4';
+const assStyle = [
+  'Fontname=HiraginoSans-W6',
+  'BorderStyle=4',
+  'BackColour=&H40000000',
+  'Outline=0',
+];
 
-console.log("0/3 start process.");
+const COMMANDS = {
+  downloadVideo: url => `youtube-dl --no-continue --write-auto-sub --sub-lang ja --convert-subs ass -f "mp4" -o ${downloadVideoName} ${url}`,
+  burnSubtitle: () => `ffmpeg -y -i ${downloadVideoName} -vf "scale=640:-1,subtitles=${downloadSubtitileName}:force_style='${assStyle.join()}'" ${burnedVideoName}`,
+  createThumbnail: (time, filename) => `ffmpeg -y -ss ${time} -i ${burnedVideoName} -vframes 1 thumbnails/${filename}.png`,
+};
 
-exec(
-  workURL,
-  function(error, stdout, stderr) {
-    if (error || stderr) {
-      console.log("Error:" + error);
-      console.log("StdErr:" + stderr);
-      deleteFile();
-      process.exit(1);
-    }
-    console.log("1/3 download complete.");
+console.log('0/3 start process.');
 
-    exec(
-      workJimaku,
-      function(error, stdout, stderr) {
-        if (error) {
-          console.log("Error:" + error);
-          deleteFile();
-          process.exit(1);
-        }
-        console.log("2/3 burn subtitle complete.");
+const errorHandler = () => {
+  deleteFile();
+  process.exit(1);
+};
 
-        try {
-          const readAss = fs.readFileSync("download.ja.ass", "utf-8");
-          const subTitles = assParser(readAss);
-          let workString;
-          var bar = new ProgressBar("[:bar] :current/:total :percent ", subTitles.length - 1);
-          let countOutputImage = 0;
-          subTitles.forEach(
-            function(obj, index) {
-              if (index == 0) return;
-              workString = `ffmpeg -y -i burnedsubtitle.mp4 -ss ${obj.start} -vframes 1 thumbnails/${index}.png`;
-              //   同期処理の場合は execSync(workString);
-              exec(
-                workString,
-                function(error, stdout, stderr) {
-                  if (error) {
-                    console.log("Error:" + error);
-                    console.log("StdErr:" + stderr);
-                    deleteFile();
-                    process.exit(1);
-                  }
-                  bar.tick();
-                  countOutputImage += 1;
-                  // console.log(countOutputImage, subTitles.length);
-                  if (countOutputImage >= subTitles.length - 1) {
-                    console.log("3/3 all complete.")
-                    deleteFile();
-                  }
-                }
-              );
-            }
-          );
-        } catch(e) {
-          console.log(e);
-          deleteFile();
-          process.exit(1);
-        }
+const deleteFile = () => {
+  const del = (filepath) => {
+    fs.unlink(filepath, (error, stdout, stderr) => {
+      if (error || stderr) {
+        console.log(`Error:${error}`);
+        console.log(`StdErr:${stderr}`);
       }
-    );
-  }
-);
+    });
+  };
 
-function deleteFile() {
-  deleteFiles.forEach(
-    function (url) {
-      fs.unlink(
-        url,
-        function(error, stdout, stderr) {
-          if (error || stderr) {
-            console.log("Error:" + error);
-            console.log("StdErr:" + stderr);
-          }
-        }
-      );
-    }
+  deleteFiles.forEach(del);
+};
+
+const downloadVideo = url => new Promise((resolve, reject) => {
+  exec(
+    COMMANDS.downloadVideo(url),
+    (error, stdout, stderr) => {
+      if (error || stderr) {
+        console.log(`Error:${error}`);
+        console.log(`StdErr:${stderr}`);
+        reject(error || stderr);
+      }
+      console.log('1/3 download complete.');
+      resolve();
+    },
   );
-}
+});
+
+const createThumbnails = (time, filename) => new Promise((resolve, reject) => {
+  exec(
+    COMMANDS.createThumbnail(time, filename),
+    (error, stdout, stderr) => {
+      if (error) {
+        console.log(`Error:${error}`);
+        console.log(`StdErr:${stderr}`);
+        reject();
+      }
+      resolve();
+    },
+  );
+});
+
+const burnSubtitle = () => new Promise((resolve, reject) => {
+  exec(
+    COMMANDS.burnSubtitle(),
+    (error, stdout, stderr) => {
+      if (error) {
+        console.log(`Error:${error}`);
+        reject();
+      }
+      console.log('2/3 burn subtitle complete.');
+      resolve();
+    },
+  );
+});
+
+const main = async (url) => {
+  await downloadVideo(url).catch(errorHandler);
+  await burnSubtitle().catch(errorHandler);
+
+  const ass = fs.readFileSync(downloadSubtitileName, 'utf-8');
+  const subtitles = assParser(ass);
+  const bar = new ProgressBar('[:bar] :current/:total :percent ', subtitles.length - 1);
+
+  await subtitles.reduce(
+    (promise, subtitle, index) => promise.then(() => createThumbnails(subtitle.start, index).then(() => bar.tick())),
+    Promise.resolve(),
+  );
+
+  console.log('3/3 complete.');
+  deleteFile();
+};
