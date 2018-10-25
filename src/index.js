@@ -8,7 +8,7 @@ const deleteFiles = [ "download.mp4", "download.ja.ass", "burnedsubtitle.mp4" ];
 const url = process.argv[2];
 
 const workURL = `youtube-dl --write-auto-sub --sub-lang ja --convert-subs ass -f "mp4" -o download.mp4 ${url}`;
-const workJimaku = 'ffmpeg -i download.mp4 -vf ass=download.ja.ass burnedsubtitle.mp4';
+const workJimaku = 'ffmpeg -y -i download.mp4 -vf ass=download.ja.ass burnedsubtitle.mp4';
 
 console.log("0/3 start process.");
 
@@ -18,7 +18,7 @@ exec(
     if (error || stderr) {
       console.log("Error:" + error);
       console.log("StdErr:" + stderr);
-      DeleteFile();
+      deleteFile();
       process.exit(1);
     }
     console.log("1/3 download complete.");
@@ -28,7 +28,7 @@ exec(
       function(error, stdout, stderr) {
         if (error) {
           console.log("Error:" + error);
-          DeleteFile();
+          deleteFile();
           process.exit(1);
         }
         console.log("2/3 burn subtitle complete.");
@@ -42,7 +42,7 @@ exec(
           subTitles.forEach(
             function(obj, index) {
               if (index == 0) return;
-              workString = `ffmpeg -i burnedsubtitle.mp4 -ss ${obj.start} -vframes 1 thumbnails/${index}.png`;
+              workString = `ffmpeg -y -i burnedsubtitle.mp4 -ss ${obj.start} -vframes 1 thumbnails/${index}.png`;
               //   同期処理の場合は execSync(workString);
               exec(
                 workString,
@@ -50,7 +50,7 @@ exec(
                   if (error) {
                     console.log("Error:" + error);
                     console.log("StdErr:" + stderr);
-                    DeleteFile();
+                    deleteFile();
                     process.exit(1);
                   }
                   bar.tick();
@@ -58,7 +58,7 @@ exec(
                   // console.log(countOutputImage, subTitles.length);
                   if (countOutputImage >= subTitles.length - 1) {
                     console.log("3/3 all complete.")
-                    DeleteFile();
+                    deleteFile();
                   }
                 }
               );
@@ -66,7 +66,7 @@ exec(
           );
         } catch(e) {
           console.log(e);
-          DeleteFile();
+          deleteFile();
           process.exit(1);
         }
       }
@@ -74,16 +74,18 @@ exec(
   }
 );
 
-function DeleteFile() {
-  for (var i = 0; i < deleteFiles.length; i ++) {
-    fs.unlink(
-      deleteFiles[i],
-      (error, stdout, stderr) => {
-        if (error || stderr) {
-          console.log("Error:" + error);
-          console.log("StdErr:" + stderr);
+function deleteFile() {
+  deleteFiles.forEach(
+    function (url) {
+      fs.unlink(
+        url,
+        function(error, stdout, stderr) {
+          if (error || stderr) {
+            console.log("Error:" + error);
+            console.log("StdErr:" + stderr);
+          }
         }
-      }
-    );
-  }
+      );
+    }
+  );
 }
